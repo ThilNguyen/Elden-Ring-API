@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 .search-wrapper {
     display:flex;
     flex-direction: column;
@@ -15,21 +19,47 @@ input {
     margin-top: 1rem;
 }
 
-.card {
+.item-card {
     border: 1px solid black;
     background-color: white;
     padding: .5rem;
 }
 
-.card > .header {
+.item-card > .item-header {
     margin-bottom: .25rem;
 }
 
-.card > .body {
+.item-card > .item-body {
+    font-size: .8rem;
+    color: #777;
+}
+
+.ammo-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: .25rem;
+    margin-top: 1rem;
+}
+
+.ammo-card {
+    border: 1px solid black;
+    background-color: white;
+    padding: .5rem;
+}
+
+.ammo-card > .ammo-header {
+    margin-bottom: .25rem;
+}
+
+.ammo-card > .ammo-body {
     font-size: .8rem;
     color: #777;
 }
 
 .hide {
     display: none;
+}
+
+body {
+    background-color: red;
 }
