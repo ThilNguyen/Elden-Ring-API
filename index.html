@@ -6,30 +6,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="src/js/script.js"></script>
     <link rel="stylesheet" href="src/css/style.css">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/ico" href="api\public\favicon.ico">
+    <script src="https://kit.fontawesome.com/cf6a8a3452.js" crossorigin="anonymous"></script>
     <title>Elden Ring API</title> 
 </head>
-<header class="">Elden Ring API
-
+<header class="header">
+    <a class="search-wrapper flex-box-search">
+        <input type="search" placeholder="🔍︎" id="search" class="flex-box-search content-search searchbar-box input-search" data-search>
+        <img src="https://img.icons8.com/ios-filled/25/000000/search--v1.png"/>
+    </a>
+    <img src="api\public\eldenring-opensource-logo.png" alt="Elden Ring API" class="image-header">
 </header>
 <body class="bg-color">
-    <div class="search-wrapper">
-        <input type="search" id="search" data-search>
+    <div class="navigation">
+        <a href="#about" class="navigation-btn about-nav" style="--clr:#D9AD5D">About</a>
+        <a href="#elements" class="navigation-btn elements-nav" style="--clr:#D9AD5D">Elements</a>
+        <a href="#helping-keywords" class="navigation-btn helping-keywords-nav" style="--clr:#D9AD5D">Helping Keywords</a>
+        <a href="#footer" class="navigation-btn footer-nav" style="--clr:#D9AD5D">Footer</a>
+        <a href="#addElement" class="navigation-btn addElement-nav" style="--clr:#D9AD5D">Add Your Element</a>
     </div>
-    <div class="ammo-cards" data-ammo-cards-container></div>
-    <template data-ammo-template>
-        <div class="ammo-card">
-            <div class="ammo-header" data-ammo-header></div>
-            <div class="ammo-body" data-ammo-body></div>
+    <section class="overflow-hidden">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </section>
+    <div class="content-about clearfix" id="about">
+        <div class="content-about-main">
+            <div class="post">
+                <img src="api\public\elden-ring-bg.webp" alt="" class="post-image">
+                <div class="post-preview">
+                    <h2 class="introduction-title">What is Elden Ring</h2>
+                    &nbsp;
+                    <p class="post-text">
+                        Elden Ring is an open-world action role-playing game released in 2022 by Japanese studio From Software.
+                    </p>
+                    <p class="post-text">
+                        The video game was born out of lead developer Hidetaka Miyazaki's desire to work with George R.R. Martin, best known for the fantasy saga A Song of Ice and Fire, to create a video game in which the writer is responsible for the backstory and mythology.
+                    </p>
+                </div>
+            </div>
         </div>
-    </template>
-    <div class="item-cards" data-item-cards-container></div>
-    <template data-item-template>
-        <div class="item-card">
-            <div class="item-header" data-item-header></div>
-            <div class="item-body" data-item-body></div>
+    </div>
+    <div id="elements">
+        <h2 class="element-title">Elements:</h2>
+        &nbsp;
+        <p class="element-text">Because of a bug the elements won't appear after loading the page. Please type some letters in the searchbar, the elements will then automaticly show off.</p>
+    </div>
+    <div class="container"></div>
+    <div id="itemList"></div>
+    <div id="weaponList"></div>
+    <div id="armorList"></div>
+    <div>
+        <h2 class="table-title" id="helping-keywords">Helping Keywords:</h2>
+        <ul>
+            <li class="table">Fire</li>
+            <li class="table">Bolt</li>
+            <li class="table">Blood</li>
+            <li class="table">...</li>
+        </ul>
+    </div>
+    <div id="addElement">
+        <h1 class="addElement-title">
+            Add your own Element
+        </h1>
+        <form>
+            <input type="text" name="text" id="AddElement" required>
+            <button type="submit" class="add-btn">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </form>
+        <div class="addElement-container">
+            <ul class="addElement-table-parent">
+                <li class="addElement-table">Dev AT <span>x</span></li>
+                <li class="addElement-table">Dev AT <span>x</span></li>
+                <li class="addElement-table">Dev AT <span>x</span></li>
+                <li class="addElement-table">Dev AT <span>x</span></li>
+            </ul>
         </div>
-    </template>
-    <h1>Elden Ring API</h1>
+    </div>
 </body>
+<footer>
+    <div id="footer">
+        <p class="border-top"></p>
+        <h3 class="footer-title">Erstellt von:</h3>
+        <p class="footer-text">
+            <a href="https://www.instagram.com/din.sg05/">Din Sabic</a>
+            und
+            <a href="https://www.instagram.com/thi__ng/">Thi Nguyen</a>
+            </p>
+    </div>
+</footer>
 </html>

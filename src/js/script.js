@@ -1,59 +1,168 @@
-const itemCardTemplate = document.querySelector("[data-item-template]")
-const itemCardContainer = document.querySelector("[data-item-cards-container]")
-const ammoCardContainer = document.querySelector("[data-ammo-cards-container]")
-const ammoCardTemplate = document.querySelector("[data-ammo-template]")
-const searchInput = document.querySelector("[data-search]")
+const itemList = document.getElementById('itemList');
+const searchBar = document.getElementById('search');
+const weaponList = document.getElementById('weaponList');
+const armorList = document.getElementById('armorList');
 
-let items = []
-let ammos = []
-
-searchInput.addEventListener("input", (e) => {
-    const value = e.target.value.toLowerCase()
-    items.forEach(item => {
-        const itemisVisible = 
-        item.name.toLowerCase().includes(value) || 
-        item.type.toLowerCase().includes(value)
-        item.itemelement.classList.toggle("hide", !itemisVisible)
-    }) 
-    ammos.forEach(ammo => {
-        if (ammo.type !== null ) {
-        const ammoisVisible = 
-        ammo.name.toLowerCase().includes(value) || 
-        ammo.type.toLowerCase().includes(value)
-        ammo.ammoelement.classList.toggle("hide", !ammoisVisible)
-}})
-})
+itemList.addEventListener('click', handleClick);
 
 
+let items = [];
+let weapons = [];
+let armors = [];
 
 
+searchBar.addEventListener('input', (e) => {
+    const searchString = e.target.value.toLowerCase();
 
-fetch('https://eldenring.fanapis.com/api/items?limit=100').then(res => res.json()) //res = response
-.then(data => {
-   items = data.data.map(item => { 
-    const itemcard = itemCardTemplate.content.cloneNode(true).children[0] //forEach ist eine Funktion, die nur mit Maps oder Arrays funktioniert
-    const itemheader = itemcard.querySelector("[data-item-header]")
-    const itembody = itemcard.querySelector("[data-item-body]")
-    itemheader.textContent = item.name
-    itembody.textContent = item.type
-    itemCardContainer.append(itemcard)
-    console.log(itemcard);
-    return { name: item.name, type: item.type, itemelement: itemcard}
-    })  
-})
+    const filteredItems = items.data.filter((item) => {
+        return (
+            item.name.toLowerCase().includes(searchString) ||
+            item.type.toLowerCase().includes(searchString)
+        );
+    });
+
+    const filteredWeapons = weapons.data.filter((weapon) => {
+        return (
+            weapon.name.toLowerCase().includes(searchString) ||
+            weapon.category.toLowerCase().includes(searchString)
+        )
+    })
+
+    const filteredBosses = armors.data.filter((armor) => {
+        return (
+            armor.name.toLowerCase().includes(searchString) ||
+            armor.category.toLowerCase().includes(searchString)
+        )
+    })
+
+    displayItems(filteredItems);
+    displayWeapons(filteredWeapons);
+    displayArmors(filteredBosses);
+
+});
 
 
-fetch('https://eldenring.fanapis.com/api/ammos?limit=100').then(res => res.json())
-.then(data => {
-    ammos = data.data.map(ammo => {
-        console.log(data)
-        const ammocard = ammoCardTemplate.content.cloneNode(true).children[0]
-        const ammoheader = ammocard.querySelector("[data-ammo-header]")
-        const ammobody = ammocard.querySelector("[data-ammo-body]")
-        ammoheader.textContent = ammo.name
-        ammobody.textContent = ammo.type
-        ammoCardContainer.append(ammocard)
-        console.log(ammocard)
-        return { name: ammo.name, type: ammo.type, ammoelement: ammocard}
-        })    
-})
+ const loadItems = async () => {
+     try {
+         const res = await fetch('https://eldenring.fanapis.com/api/items?limit=100');
+         items = await res.json();
+        displayItems(items);
+     } catch (err) {
+         console.error(err);
+     }
+ };
+
+ const loadWeapons = async () => {
+    try {
+        const res = await fetch('https://eldenring.fanapis.com/api/weapons?limit=100');
+        weapons = await res.json();
+       displayWeapons(weapons);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const loadArmors = async () => {
+    try {
+        const res = await fetch('https://eldenring.fanapis.com/api/armors?limit=100');
+        armors = await res.json();
+       displayWeapons(armors);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+
+const displayItems = (items) => {
+    const htmlString = Array.from(items).map((item) => {
+            return `
+            <li class="item">
+            <button type="button" class="like_btn">
+            <span id="icon"><i class="fa-regular fa-heart"></i></span>
+            </button>
+                <h2>${item.name}</h2>
+                <p>Type: ${item.type}</p>
+                <img src="${item.image}"></img>
+            </li>
+        `;
+        })
+        .join('');
+    itemList.innerHTML =  htmlString;
+    };
+console.log(itemList)
+
+const displayWeapons = (weapons) => {
+    const htmlString = Array.from(weapons).map((weapon) => {
+            return `
+            <li class="weapon">
+            <button type="button" class="like_btn">
+            <span id="icon"><i class="fa-regular fa-heart"></i></span>
+            </button>
+                <h2>${weapon.name}</h2>
+                <p>Category: ${weapon.category}</p>
+                <img src="${weapon.image}"></img>
+            </li>
+        `;
+        })
+        .join('');
+    weaponList.innerHTML = htmlString;
+};
+
+const displayArmors = (armors) => {
+    const htmlString = Array.from(armors).map((armor) => {
+           return `
+            <li class="armor">
+            <button type="button" class="like_btn">
+            <span id="icon"><i class="fa-regular fa-heart"></i></span>
+            </button>
+                <h2>${armor.name}</h2>
+                <p>Category: ${armor.category}</p>
+                <img src="${armor.image}"></img>
+            </li>
+
+        `;
+        })
+        .join('');
+    armorList.innerHTML = htmlString;
+};
+
+
+  function handleClick(e) {
+    const likeIcon = document.querySelector("#icon")
+      if (e.target.matches('button')){
+          likeIcon.innerHTML = `<i class="fa-solid fa-heart"></i>`
+  } else {
+    likeIcon.innerHTML = `<i class="fa-regular fa-heart"></i>`
+  }
+  }
+
+loadItems();
+loadWeapons();
+loadArmors();
+
+const inputText = document.querySelector('#AddElement');
+const myButton = document.querySelector('.add-btn');
+const list = document.querySelector('.container .addElement-table-parent');
+myButton.addEventListener('click', (e)=>{
+  if(inputText.value != ""){
+    e.preventDefault();
+    const myLi = document.createElement('li');
+    myLi.innerHTML = inputText.value;
+    myLi.appendChild(myLi);
+
+    const mySpan = document.createElement('span');
+    mySpan.innerHTML = 'x';
+    myLi.appendChild(mySpan);
+    }
+    const close = document.querySelectorAll('span');
+    for(let i in close){
+        close[i].addEventListener('click', ()=>{
+            close[i].parentElement.style.opacity = 0;
+            setTimeout(()=>{
+                close[i].parentElement.style.display = 'none';
+                close[i].parentElement.remove();
+            }, 500);
+        })
+    }
+    inputText.value = "";
+});
